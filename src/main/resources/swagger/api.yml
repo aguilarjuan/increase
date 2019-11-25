@@ -1,0 +1,124 @@
+swagger: '2.0'
+info:
+  description: |
+    API de servicio de consulta de saldos
+  version: 1.0.1
+  title: resumen de informacion de transacciones
+host: increase-consultar-saldo.herokuapp.com
+basePath: /V1/consultar
+schemes:
+  - https
+  - http
+paths:
+  /clientes:
+    get:
+      summary: Lista de la informacion de los clientes
+      operationId: consultarClientes
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ResponseClienteDTO'
+        '404':
+          description: list of client not found
+
+  /transacciones:
+    get:
+      summary: Lista de las transacciones de cada cliente
+      operationId: consultarTransacciones
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ResponseTransaccionesDTO'
+        '404':
+          description: list of transacction not found
+
+  /balance:
+    get:
+      summary: Lista del monto a cobrar de cada cliente
+      operationId: consultarBalance
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ResponseBalanceDTO'
+        '404':
+          description: list of transacction not found
+
+
+
+definitions:
+  ResponseClienteDTO:
+    type: object
+    properties:
+      clienteID:
+        type: string
+      email:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      job:
+        type: string
+      country:
+        type: string
+      address:
+        type: string
+      zipCode:
+        type: string
+      phone:
+        type: string
+
+  ResponseTransaccionesDTO:
+    type: object
+    properties:
+      transaccionID:
+        type: string
+      monto:
+        type: integer
+        format: int32
+      tipo:
+        type: string
+      clienteID:
+        type: string
+
+  ResponseBalanceDTO:
+    type: object
+    properties:
+      clienteID:
+        type: string
+      montoTotal:
+        type: integer
+        format: int32
+      totalConDescuentos:
+        type: integer
+        format: int32
+
+  ApiResponse:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      type:
+        type: string
+      message:
+        type: string
+    example:
+      code: 0
+      type: type
+      message: message
